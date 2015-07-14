@@ -1,1 +1,263 @@
-Testing to see if the website works
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>RC4 NOMORE</title>
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<link href="http://fonts.googleapis.com/css?family=Karla:400,700" rel="stylesheet" />
+	<link href="css/default.css" rel="stylesheet" type="text/css" media="all" />
+	<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type='text/javascript' src='js/jquery.min.js'></script>
+	<script type='text/javascript' src='js/modernizr.min.js'></script>
+</head>
+<body>
+<div id="wrapper">
+	<div id="header-wrapper">
+		<div id="header" class="container">
+			<div id="logo">
+				<h1>RC4 NOMORE</h1>
+				<h2>Numerous Occurrence MOnitoring & Recovery Exploit</h2>
+				<p style="text-align: center; margin-top: 0px; padding-top: 0px; font-size: 14px; color: #909090;">
+					<em>By <a href="https://twitter.com/vanhoefm">Mathy Vanhoef</a> and <a href="https://distrinet.cs.kuleuven.be/people/frank">Frank Piessens</a>, iMinds-DistriNet, KU Leuven</em>
+				</p>
+			</div>
+		</div>
+	</div>
+	<div id="menu-wrapper">
+		<div id="main-nav" class="container">
+			<span class="custom-mobile-menu-title" style="display: none;">Nagivate page</span>
+			<ul class="menu">
+				<li class="page_item"><a href="#intro">Introduction</a></li>
+				<li class="page_item"><a href="#demo">Demo</a></li>
+				<li class="page_item"><a href="#paper">Paper</a></li>
+				<li class="page_item"><a href="#faq">Q&amp;A</a></li>
+				<li class="page_item"><a href="#resources">Resources</a></li>
+			</ul>
+		</div>
+	</div>
+	<div id="page" class="container">
+		<div id="content">
+            <a name="intro" ></a>
+			<div class="title"><h2>Introduction</h2></div>
+			<p>When you visit a website, and the browser's address bar contains a lock icon <img src="images/lock.png" />, the HTTPS protocol is used to protect your communication with this website (providing security and privacy).
+				HTTPS supports several encryption techniques, one of them being the famous RC4 algorithm.
+				At one point RC4 was used 50% of the time, with the latest estimate being 30%.
+				Our RC4 NOMORE attack exposes weaknesses in this RC4 encryption algorithm.
+				More precisely, in most situations where RC4 is used, these weaknesses can be used to reveal information which was previously thought to be safely encrypted.
+			</p>
+			<p>In particular we show that an attacker can <strong>decrypt web cookies</strong>, which are normally protected by the HTTPS protocol.
+				Websites use these cookies to identify users and authorize actions they perform.
+				By obtaining the cookie of a victim, an attacker can log into a website as if he were the victim.
+				This means the attacker can perform actions under the victim's name (e.g. post status updates and send messages), gain access to personal information (e.g. to emails and chat history), and so on.
+			</p>
+			<p>The research behind the attack will be presented at <a href="https://www.usenix.org/conference/usenixsecurity15/technical-sessions/presentation/vanhoef">USENIX Security</a>.
+                Summarized, an attacker can decrypt a cookie within 75 hours.
+                In contrast to previous attacks, this short execution time allows us to perform the attack in practice.
+                <!-- TODO: Improve -->
+                When we tested the attack against real devices, it <strong>took merely 52 hours</strong> to successfully perform the attack. The attack consists of three steps:</p>
+			<center><img id="diagram" src="images/diagram_mobile.png" /></center>
+			<p>
+			When the victim visits an unencrypted website, the attacker inserts malicious JavaScript code inside the website.
+			This code will induce the victim to transmit encrypted requests which contain the victim's web cookie.
+			By monitoring numerous of these encrypted requests, a list of likely cookie values can be recovered.
+			All cookies in this list are tested until the correct one is found.</p>
+		</div>
+        <div id="content">
+            <a name="demo" ></a>
+			<div class="title"><h2>Demonstration</h2></div>
+			<p>As a proof-of-concept we executed the attack in our lab, against a fictitious website and victim (to prevent harming real systems).
+                In our demonstration the victim uses Internet Explorer, and we show how the attacker can take over an account of the victim.
+                This is the <strong>first time</strong> weaknesses in RC4, when used in TLS and HTTPS, are exploited <strong>against real devices</strong>.
+			</p>
+			<div class="demo-video">
+			<div class="demo-video-container">
+				<iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/d8MtmKrXlKQ?rel=0&amp;showinfo=0&vq=hd720" frameborder="0" allowfullscreen></iframe>
+			</div>
+			</div>
+            <p>To successfully decrypt a 16-character cookie with a success probability of 94%, roughly 9⋅2<sup>27</sup> encryptions of the cookie need to be captured.
+                Since we can make the client transmit 4450 requests per seconds, this amount can be collected in merely 75 hours.
+                If the attacker has some luck, less encryptions need to be captured.
+                In our demonstration 52 hours was enough to execute the attack, at which point 6.2⋅2<sup>27</sup> requests were captured.
+                During the final step of the attack, the captured requests are transformed into a list of 2<sup>23</sup> likely cookie values.
+                All cookies in this list can be tested in less than 7 minutes.</p>
+            <p>Our attack is <strong>not limited to decrypting cookies</strong>.
+                Any data or information that is repeatedly encrypted can be recovered.
+                We focus on web cookies in HTTPS as it nicely illustrates the weaknesses in RC4 and the power of our attack.</p>
+        </div>
+		<div id="content">
+            <a name="paper" ></a>
+			<div class="title"><h2>Paper</h2></div>
+            <p>Our research paper behind the attack is <a href="vanhoef-usenix2015.pdf">All Your Biases Belong to Us: Breaking RC4 in WPA-TKIP and TLS</a>.
+			In the paper we not only present attacks against TLS/HTTPS, but also against WPA-TKIP.
+			Our attack against WPA-TKIP takes only an hour to execute, and allows an attacker to inject and decrypt arbitrary packets.
+			<!--TODO: Get some data to defend this claim-->
+			On this page we focused on HTTPS because it used more than WPA-TKIP.
+			The paper will be presented at <a href="https://www.usenix.org/conference/usenixsecurity15">USENIX Security 2015</a>.<p>
+        </div>
+        <div id="content">
+            <a name="faq" ></a>
+			<div class="title"><h2>Q&amp;A</h2></div>
+			<div class="subtitle">
+                <a name="compare" ></a>
+				<h3>How does this attack compare to previous attacks?</h3>
+                <p>The <a href="http://www.isg.rhul.ac.uk/tls/">first attack</a> against RC4 as used in TLS was estimated to take more than 2000 hours.
+					It required 13⋅2<sup>30</sup> encryptions of a cookie to be able to decrypt it, and could make a victim generate 1700 requests per second (with each request containing the encrypted cookie).
+					We require only 9⋅2<sup>27</sup> requests, and can make a victim generate 4450 requests per second.
+					This means our attack takes merely 75 hours to execute.
+					We have also tested the attack against real devices, while previous works only performed simulations.</p>
+                <p>The <a href="http://www.imperva.com/docs/HII_Attacking_SSL_when_using_RC4.pdf">Bar Mitzvah attack</a> relies on keystreams with predictable LSBs, which occur once every 2<sup>24</sup> connections.
+                    Only the first 100 keystream bytes are known to be weak.
+                    However, currently no systems are known which encrypt sensitive data at these positions.</p>
+                <p>Another attack <a href="http://www.isg.rhul.ac.uk/tls/RC4mustdie.html">targets passwords</a> encrypted by RC4 and relies on statistical biases in the initial keystream bytes.
+                    It requires roughly 2<sup>26</sup> encryptions of a password to be able to decrypt it.
+                    However, generating many requests in this scenario proves to be difficult, as each request must be performed in a new TLS connection.
+                    They estimated the attack takes between 312 to 776 hours to execute.</p>
+				<p>Our work significantly reduces the execution time of performing an attack, and we consider this improvement very worrisome.
+					Considering there are still biases which are unused, that more efficient algorithms can be implemented, and better traffic generation techniques can be explored, we expect further improvements in the future.</p>
+			</div>
+			<div class="subtitle">
+                <a name="weakneses" ></a>
+				<h3>Which weaknesses in RC4 does the attack abuse?</h3>
+				<p>It relies on two types of statistical biases present in the keystream.
+                    The first one is that two consecutive bytes are biased towards certain values.
+                    These are commonly called the <a href="http://www.mindspring.com/~dmcgrew/rc4-03.pdf">Fluhrer-McGrew biases</a>.
+                    The second type of biases is that a pair of consecutive bytes is likely to repeat itself.
+                    These are called the <a href="https://scholar.google.be/scholar?cluster=10451318314034712604">Mantin's ABSAB biases</a>.
+                    Both types of biases are combined in our attack.</p>
+				<p>These biases allow us to decrypt <em>repeated</em> plaintext such as cookies.</p>
+			</div>
+			<div class="subtitle">
+                <a name="whatnow" ></a>
+				<h3>What now?</h3>
+				<p>The only good countermeasure is to stop using RC4.
+                    Nevertheless, we did observe that generating the required amount of traffic can be a bottleneck when executing the attack.
+                    Hence attacks can be made more expensive, though not prevented, by making it more difficult to generate traffic.
+                    One option is to prohibit browsers from making parallel connections when using RC4 (normally multiple connections are made to load websites faster).
+                    This reduces the speed at which clients can make requests, meaning they generate traffic more slowly.
+                    However, we stress that this would only increase the execution time of attacks, and not prevent them.</p>
+			</div>
+			<div class="subtitle">
+                <a name="wkatkip" ></a>
+				<h3>Is WPA-TKIP also vulnerable?</h3>
+				<p>Yes. We can break a WPA-TKIP network within an hour.
+                    More precisely, after successfully executing the attack, an attacker can decrypt and inject arbitrary packets sent towards a client.
+                    In general, any protocol using RC4 should be considered vulnerable.</p>
+			</div>
+        </div>
+        <div id="content">
+            <a name="resources"></a>
+			<div class="title"><h2>Resources</h2></div>
+            <p>We provide more detailed versions of several graphs in our paper:</p>
+			<ul>
+                <li>Distribution of <a href="resources/rc4second256.pdf">keystream bytes 258 to 513 (per position)</a>.</li>
+                <li>Distribution of <a href="resources/rc4second256_val.pdf">keystream bytes 258 to 513 (per value)</a>.</li>
+                <li>Detailed graph of the <a href="resources/fmbiases.pdf">Fluhrer-McGrew biases in initial keystream</a> bytes (figure 4 in <a href="vanhoef-usenix2015.pdf">the paper</a>).</li>
+                <li>Detailed graph of the <a href="resources/firsttwo.pdf">influence of the first two keystream bytes</a> (figure 5 in <a href="vanhoef-usenix2015.pdf">the paper</a>).</li>
+            </ul>
+            <p>While full keystream statistics are too big to put online, we do provide datasets over most of our newly discovered biases:</p>
+            <ul>
+                <li>Statistics of the <a href="resources/singlestats.txt">initial 513 keystream bytes</a>, computed using roughly 2<sup>47.18</sup> RC4 keys.</li>
+                <li>Statistics on the <a href="resources/byte1.7z">influence of the first keystream byte</a>, and the <a href="resources/byte2.7z">influence of the second keystream byte</a>, computed using roughly 2<sup>44.19</sup> RC4 keys. The format of these files, and code to easily read them, can be found in <a href="resources/readfirsttwo.py">this Python file</a>.</li>
+                <li>Statistics on the <a href="resources/consec512.7z">first 512 consecutive keystream bytes</a>, computed using roughly 2<sup>45.01</sup> RC4 keys. The format of the file, and code to easily read it, can be found in <a href="resources/readconsec.py">this Python file</a>.</li>
+            </ul>
+<div type="margin: 0px auto;">            
+</div>
+        </div>
+	</div>
+</div>
+
+<!--
+<div id="footer-wrapper">
+	<div id="footer" class="container" style="width: 790px;">
+		<div id="box1">
+			<div class="title">
+				<h2>Some links</h2>
+			</div>
+			<ul class="style1">
+				<li><a href="#">Semper mod quis eget mi dolore</a></li>
+				<li><a href="#">Quam turpis feugiat sit dolor</a></li>
+				<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
+				<li><a href="#">Consequat etiam lorem phasellus</a></li>
+				<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
+				<li><a href="#">Semper mod quisturpis nisi</a></li>
+			</ul>
+		</div>
+		<div id="box2">
+			<div class="title">
+				<h2>&nbsp;</h2>
+			</div>
+			<ul class="style1">
+				<li><a href="#">Semper mod quis eget mi dolore</a></li>
+				<li><a href="#">Quam turpis feugiat sit dolor</a></li>
+				<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
+				<li><a href="#">Consequat etiam lorem phasellus</a></li>
+				<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
+				<li><a href="#">Semper mod quisturpis nisi</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+-->
+
+<div id="copyright" class="container">
+	<p><a  rel="license" href="http://creativecommons.org/licenses/by/4.0/" style="letter-spacing: normal;">
+        Creative Commons Attribution 4.0 International License</a> | Design inspired by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
+</div>
+<script type="text/javascript">
+function resize_diagram() {
+	if (document.documentElement.clientWidth > 780) {
+		$("#diagram").attr("src", "images/diagram.png");
+	} else {
+		$("#diagram").attr("src", "images/diagram_mobile.png");
+	}
+}
+
+resize_diagram();
+window.onresize = resize_diagram;
+
+/**
+ * Mobile Menu
+ */
+ function close_menu() {
+	$('a#menu_button').removeClass('responsive-toggle-open');
+	$('#menu_title').css('background', '');
+	// So menu still works after being used, and window is resized
+	$('.js #main-nav .menu').removeAttr('style');
+}
+ 
+(function ($) {
+	var current = $('span.custom-mobile-menu-title').html();
+	$('#main-nav').append('<a id="menu_button"></a>');
+	$('#main-nav').prepend('<div id="menu_title">' + current + '</div>');
+	$('a#menu_button, #menu_title').click(function (e) {
+		e.stopPropagation();
+		$('#menu_title').css('background', '#008C9A');
+		$('.js #main-nav .menu').slideToggle(function () {
+			if ($(this).is(':visible')) {
+				$('a#menu_button').addClass('responsive-toggle-open');
+			}
+			else {
+				close_menu();
+			}
+		});
+	});
+})(jQuery);
+
+// Close the mobile menu when clicked outside of it.
+(function ($) {
+	$('html').click(function () {
+		// Check if the menu is open, close in that case.
+		if ($('a#menu_button').hasClass('responsive-toggle-open')) {
+			$('.js #main-nav .menu').slideToggle(function () {
+				close_menu();
+			});
+		}
+	})
+})(jQuery);
+
+</script>
+</body>
+</html>
