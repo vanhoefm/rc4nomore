@@ -334,7 +334,7 @@ sup {
 	background-size: contain;
 }
 
-@media screen and (max-width:780px) {
+@media screen and (max-width:560px) {
 	#diagram {
 		background-image: url(../images/diagram_mobile.png);
 		width: 100%;
