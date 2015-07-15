@@ -324,8 +324,24 @@ sup {
 /*********************************************************************************/
 
 #diagram {
-	padding: 5px 0px 15px 0px;
-	max-width: 100%;
+	margin: 0px auto;
+	background-image: url(../images/diagram.png);
+	width: 640px;
+	height: 306px;
+	background-repeat: no-repeat;
+	background-position: center;
+	margin-bottom: 15px;
+	background-size: contain;
+}
+
+@media screen and (max-width:560px) {
+	#diagram {
+		background-image: url(../images/diagram_mobile.png);
+		width: 100%;
+		height: auto;
+		min-height: 275px;
+		max-height: 400px;
+	}
 }
 
 .demo-video {
