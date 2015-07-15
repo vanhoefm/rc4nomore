@@ -24,7 +24,7 @@ print "Probability example event: 2^%f = %g" % (math.log(pr, 2), pr)
 
 # Example 2 (byte1.dat):
 #
-#	Bias 2 in the paper: Pr[Z_1 = 257 - i /\ Z_i = i]
+#	Bias 2 in the paper: Pr[Z_1 = 257 - i /\ Z_i = i] assuming we loaded byte1.dat
 #
 # We print the absolute relative bias compared to single-byte biases. Otherwise
 # these results are too heavily influenced by single-byte biases.

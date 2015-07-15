@@ -16,7 +16,7 @@ print "Number of RC4 keys:", math.log(numkeys, 2)
 
 # Example 1:
 #
-#       Probability Pr[Z_100 = 75 /\ Z_101 = 200] assuming we loaded byte1.dat.
+#       Probability Pr[Z_100 = 75 /\ Z_101 = 200]
 #
 # Note that in papers the position r in Z_r is 1-based, while python is 0-based.
 pr = stats[100-1, 75, 200] / numkeys
