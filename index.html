@@ -1,4 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" class="no-js">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -10,8 +10,8 @@
 	<link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script type='text/javascript' src='js/jquery.min.js'></script>
-	<script type='text/javascript' src='js/modernizr.min.js'></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/modernizr.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -58,7 +58,7 @@
                 In contrast to previous attacks, this short execution time allows us to perform the attack in practice.
                 <!-- TODO: Improve -->
                 When we tested the attack against real devices, it <strong>took merely 52 hours</strong> to successfully perform the attack. The attack consists of three steps:</p>
-			<center><img id="diagram" src="images/diagram_mobile.png" /></center>
+                <div id="diagram"></div>
 			<p>
 			When the victim visits an unencrypted website, the attacker inserts malicious JavaScript code inside the website.
 			This code will induce the victim to transmit encrypted requests which contain the victim's web cookie.
@@ -74,7 +74,7 @@
 			</p>
 			<div class="demo-video">
 			<div class="demo-video-container">
-				<iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/d8MtmKrXlKQ?rel=0&amp;showinfo=0&vq=hd720" frameborder="0" allowfullscreen></iframe>
+				<iframe width="853" height="480" src="https://www.youtube-nocookie.com/embed/d8MtmKrXlKQ?rel=0&amp;showinfo=0&amp;vq=hd720" frameborder="0" allowfullscreen></iframe>
 			</div>
 			</div>
             <p>To successfully decrypt a 16-character cookie with a success probability of 94%, roughly 9⋅2<sup>27</sup> encryptions of the cookie need to be captured.
@@ -169,66 +169,22 @@
 	</div>
 </div>
 
-<!--
-<div id="footer-wrapper">
-	<div id="footer" class="container" style="width: 790px;">
-		<div id="box1">
-			<div class="title">
-				<h2>Some links</h2>
-			</div>
-			<ul class="style1">
-				<li><a href="#">Semper mod quis eget mi dolore</a></li>
-				<li><a href="#">Quam turpis feugiat sit dolor</a></li>
-				<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-				<li><a href="#">Consequat etiam lorem phasellus</a></li>
-				<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-				<li><a href="#">Semper mod quisturpis nisi</a></li>
-			</ul>
-		</div>
-		<div id="box2">
-			<div class="title">
-				<h2>&nbsp;</h2>
-			</div>
-			<ul class="style1">
-				<li><a href="#">Semper mod quis eget mi dolore</a></li>
-				<li><a href="#">Quam turpis feugiat sit dolor</a></li>
-				<li><a href="#">Amet ornare in hendrerit in lectus</a></li>
-				<li><a href="#">Consequat etiam lorem phasellus</a></li>
-				<li><a href="#">Amet turpis, feugiat et sit amet</a></li>
-				<li><a href="#">Semper mod quisturpis nisi</a></li>
-			</ul>
-		</div>
-	</div>
-</div>
--->
-
 <div id="copyright" class="container">
 	<p><a  rel="license" href="http://creativecommons.org/licenses/by/4.0/" style="letter-spacing: normal;">
         Creative Commons Attribution 4.0 International License</a> | Design inspired by <a href="http://templated.co" rel="nofollow">TEMPLATED</a>.</p>
 </div>
 <script type="text/javascript">
-function resize_diagram() {
-	if (document.documentElement.clientWidth > 560) {
-		$("#diagram").attr("src", "images/diagram.png");
-	} else {
-		$("#diagram").attr("src", "images/diagram_mobile.png");
-	}
-}
-
-resize_diagram();
-window.onresize = resize_diagram;
-
 /**
  * Mobile Menu
  */
- function close_menu() {
-	$('a#menu_button').removeClass('responsive-toggle-open');
-	$('#menu_title').css('background', '');
-	// So menu still works after being used, and window is resized
-	$('.js #main-nav .menu').removeAttr('style');
-}
  
 (function ($) {
+	function close_menu() {
+		$('a#menu_button').removeClass('responsive-toggle-open');
+		$('#menu_title').css('background', '');
+		// So menu still works after being used, and window is resized
+		$('.js #main-nav .menu').removeAttr('style');
+	}
 	var current = $('span.custom-mobile-menu-title').html();
 	$('#main-nav').append('<a id="menu_button"></a>');
 	$('#main-nav').prepend('<div id="menu_title">' + current + '</div>');
@@ -244,10 +200,7 @@ window.onresize = resize_diagram;
 			}
 		});
 	});
-})(jQuery);
-
-// Close the mobile menu when clicked outside of it.
-(function ($) {
+	// Close the mobile menu when clicked outside of it.
 	$('html').click(function () {
 		// Check if the menu is open, close in that case.
 		if ($('a#menu_button').hasClass('responsive-toggle-open')) {
@@ -255,9 +208,8 @@ window.onresize = resize_diagram;
 				close_menu();
 			});
 		}
-	})
+	});
 })(jQuery);
-
 </script>
 </body>
 </html>
