@@ -530,3 +530,10 @@ ul.style2 li:first-child
 	color: #8C8C8C;
 }
 
+/*********************************************************************************/
+/* Browser-specific fixes                                                        */
+/*********************************************************************************/
+
+/** So click events are properly handled on iPhone */
+.clickable { cursor: pointer; }
+
