@@ -325,7 +325,7 @@ sup {
 
 #diagram {
 	margin: 0px auto;
-	background-image: url(/images/diagram.png);
+	background-image: url(../images/diagram.png);
 	width: 640px;
 	height: 306px;
 	background-repeat: no-repeat;
@@ -336,7 +336,7 @@ sup {
 
 @media screen and (max-width:780px) {
 	#diagram {
-		background-image: url(/images/diagram_mobile.png);
+		background-image: url(../images/diagram_mobile.png);
 		width: 100%;
 		height: auto;
 		min-height: 275px;
