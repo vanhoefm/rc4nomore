@@ -324,24 +324,43 @@ sup {
 /*********************************************************************************/
 
 #diagram {
-	margin: 0px auto;
-	background-image: url(../images/diagram.png);
-	width: 640px;
-	height: 306px;
-	background-repeat: no-repeat;
-	background-position: center;
-	margin-bottom: 15px;
-	background-size: contain;
+    margin: 0px auto;
+    margin-bottom: 15px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    background-image: url(../images/diagram.png);
+    height: 306px;
 }
 
+/**
+ * Scaling background image according to a given image ratio:
+ *
+ *    http://stackoverflow.com/questions/600743/how-to-get-div-height-to-auto-adjust-to-background-size
+ *
+ * This is only works properly if the image covers the complete width of the div, otherwise there is
+ * too much top-padding. Hence we only start doing this once the screen is smaller than image width.
+ * Additionally this is done depending on the specific image to get the correct ratios.
+ */
+@media screen and (max-width:640px) {
+    #diagram {
+        background-image: url(../images/diagram.png);
+        max-width: 640px;
+        width: 100%;
+        height: 0;
+        padding-top: 47.81%; /* (img-height / img-width * widthpercentage) */
+                             /* (       306 /       640 *             100) */
+    }
+}
 @media screen and (max-width:560px) {
-	#diagram {
-		background-image: url(../images/diagram_mobile.png);
-		width: 100%;
-		height: auto;
-		min-height: 275px;
-		max-height: 400px;
-	}
+    #diagram {
+        background-image: url(../images/diagram_mobile.png);
+        width: 100%;
+        height: 0;
+        padding-top: 62.56%; /* (img-height / img-width * widthpercentage) */
+                             /* (       416 /       665 *             100) */
+    }
 }
 
 .demo-video {
