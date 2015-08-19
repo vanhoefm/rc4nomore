@@ -80,10 +80,6 @@ sup {
 	background: #FFFFFF url(../images/bg01.png) repeat;
 }
 
-#footer-wrapper {
-	background: #0F0F0F;
-}
-
 .container {
 	margin: 0px auto;
 }
@@ -99,6 +95,12 @@ sup {
 	background: #333333;
 }
 
+#footer-wrapper
+{
+	overflow: hidden;
+	padding: 4em 1em;
+	background: #1E1B1A;
+}
 
 /*********************************************************************************/
 /* Header and text-based logo                                                    */
@@ -396,28 +398,27 @@ sup {
 /*********************************************************************************/
 /* Footer                                                                        */
 /*********************************************************************************/
-	
-#footer-wrapper
-{
-	overflow: hidden;
-	padding: 5em 0em;
-	background: #1E1B1A;
-}
 
 #footer
 {
+	max-width: 920px;
 	color: #ADADAD;
 }
 
-#footer a
-{
-	color: #B1B1B1;
+#footer #awards {
+	padding-bottom: 30px;
+	line-height: 150%;
+}
+
+#footer #awards a {
+	color: #FFF;
+	text-decoration: none;
 }
 
 #footer .title h2
 {
-	font-weight: 400;
-	font-size: 1.2em;
+	font-weight: 500;
+	font-size: 1.6em;
 	color: #FFF;
 }
 
@@ -429,6 +430,7 @@ sup {
 #footer .style1 li
 {
 	border-color: #2D2926 !important;
+	padding: 0.5em 0px;
 }
 
 #footer .style1 a
@@ -438,28 +440,35 @@ sup {
 	color: #B1B1B1;
 }
 
-#box1
-{
-	float: left;
-	width: 354px;
-	margin-right: 24px;
-	padding-right: 30px;
+#box-wrapper {
+	text-align: center;
 }
 
-#box2
+#box1, #box2
 {
-	float: left;
-	width: 354px;
-	margin-left: 24px;
+	display: inline-block;
+	width: 330px;
 }
 
-#box3
-{
-	float: right;
-	width: 344px;
-	padding-left: 40px;
+#box1 { margin-right: 100px; }
+/** First downscale: margin between boxes */
+@media screen and (max-width:800px) {
+	#box1 { margin-right: 10px; }
 }
-
+/** Second downscale together with smaller text: reduce width of boxes */
+@media screen and (max-width:780px) {
+	#box1, #box2 { width: 290px; }
+}
+/** Boxes under each other: remove margins, increase text to fill screen */
+@media screen and (max-width:625px) {
+	#box1, #box2 { margin: 0px; width: 350px; }
+	#footer li { font-size: 16px; }
+}
+/** Final downscale: again reduce text size */
+@media screen and (max-width:390px) {
+	#box1, #box2 { margin: 0px; width: 290px; }
+	#footer li { font-size: 14px; }
+}
 
 /*********************************************************************************/
 /* List Styles                                                                   */
