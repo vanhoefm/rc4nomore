@@ -13,6 +13,7 @@
 	<!--[if lt IE 9]>
 	<script src="js/respond.src.js"></script>
 	<![endif]-->
+	<script src="https://code.highcharts.com/highcharts.js"></script>
 	<script>
 	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -49,8 +50,8 @@
 		</div>
 	</div>
 	<div id="page" class="container">
-		<div id="content">
-            <a name="intro" ></a>
+	<div id="content">
+		<a name="intro" ></a>
 			<div class="title"><h2>Introduction</h2></div>
 			<p>When you visit a website, and the browser's address bar contains a lock icon <img src="images/lock.png" />, the HTTPS protocol is used to protect your communication with this website (providing security and privacy).
 				HTTPS supports several encryption techniques, one of them being the famous RC4 algorithm.
@@ -69,12 +70,15 @@
                 <!-- TODO: Improve -->
                 When we tested the attack against real devices, it <strong>took merely 52 hours</strong> to successfully perform the attack. The attack consists of three steps:</p>
                 <div id="diagram"></div>
-			<p>
-			When the victim visits an unencrypted website, the attacker inserts malicious JavaScript code inside the website.
+		<p>When the victim visits an unencrypted website, the attacker inserts malicious JavaScript code inside the website.
 			This code will induce the victim to transmit encrypted requests which contain the victim's web cookie.
 			By monitoring numerous of these encrypted requests, a list of likely cookie values can be recovered.
-			All cookies in this list are tested until the correct one is found.</p>
-		</div>
+			All cookies in this list are tested until the correct one is found.
+		</p>
+		<p>After presenting our work at USENIX Security, we noticed usage of RC4 had significantly decreased. To keep a historic trend of RC4 usage in SSL and TLS (the underlying technology providing security for protocols such as HTTPS), we are now monitoring and archiving RC4 usage statistics as reported by the <a href="http://notary.icsi.berkeley.edu/">ICSI Certificate Notary</a>:
+		</p>
+		<div id="container" style="width:100%; height:350px;"></div>
+	</div>
         <div id="content">
             <a name="demo" ></a>
 			<div class="title"><h2>Demonstration</h2></div>
@@ -277,6 +281,77 @@
         $("html").addClass("clickable");
     }
 })(jQuery);
+
+
+/**
+ * RC4 Usage Graph
+ */
+$(function () {
+    $.getJSON('https://stats.rc4nomore.com/rc4.json', function (data) {
+
+        $('#container').highcharts({
+            chart: {
+                zoomType: 'x',
+		backgroundColor: null
+            },
+            title: {
+                text: 'Percentage of SSL/TLS connections using RC4'
+            },
+            subtitle: {
+                text: document.ontouchstart === undefined ?
+                        'Click and drag in the plot area to zoom in' : 'Pinch the chart to zoom in'
+            },
+            xAxis: {
+                type: 'datetime'
+            },
+            yAxis: {
+                title: {
+                    text: 'Percentage using RC4'
+                },
+		labels: {
+		    formatter: function() { return parseInt(this.value * 100) + "%"; }
+		}
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    fillColor: {
+                        linearGradient: {
+                            x1: 0,
+                            y1: 0,
+                            x2: 0,
+                            y2: 1
+                        },
+                        stops: [
+                            [0, Highcharts.getOptions().colors[0]],
+                            [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    },
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+
+            series: [{
+                type: 'area',
+                name: 'Percentage using RC4',
+                data: data
+            }]
+        });
+    });
+});
+
+
 </script>
 </body>
 </html>
