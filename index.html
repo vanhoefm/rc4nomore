@@ -55,7 +55,7 @@
 			<div class="title"><h2>Introduction</h2></div>
 			<p>When you visit a website, and the browser's address bar contains a lock icon <img src="images/lock.png" />, the HTTPS protocol is used to protect your communication with this website (providing security and privacy).
 				HTTPS supports several encryption techniques, one of them being the famous RC4 algorithm.
-				At one point RC4 was used 50% of the time, with the latest estimate being 30%.
+				At one point RC4 was used 50% of the time, with the estime around Februari 2015 being 30%.
 				Our RC4 NOMORE attack exposes weaknesses in this RC4 encryption algorithm.
 				More precisely, in most situations where RC4 is used, these weaknesses can be used to reveal information which was previously thought to be safely encrypted.
 			</p>
@@ -74,6 +74,8 @@
 			This code will induce the victim to transmit encrypted requests which contain the victim's web cookie.
 			By monitoring numerous of these encrypted requests, a list of likely cookie values can be recovered.
 			All cookies in this list are tested until the correct one is found.
+		</p>
+		<p><strong>Update October 2017:</strong> We are pleased to say that, together with <a href="http://www.isg.rhul.ac.uk/tls/">other work on RC4</a>, our work influenced major <a href="https://groups.google.com/a/chromium.org/d/msg/security-dev/kVfCywocUO8/vgi_rQuhKgAJ">browsers</a> to <a href="https://groups.google.com/d/msg/mozilla.dev.platform/JIEFcrGhqSM/CIjtpwxoLQAJ">disable</a> <a href="https://blogs.windows.com/msedgedev/2016/03/16/rc4-will-no-longer-be-supported-in-microsoft-edge-and-ie11-beginning-in-april/">RC4</a>. As a result, usage of RC4 has drastically decreased: less than 1% of all HTTPS and TLS connections still use RC4.
 		</p>
 		<!--
 		<p>After presenting our work at USENIX Security, we noticed usage of RC4 had significantly decreased. To keep a historic trend of RC4 usage in SSL and TLS (the underlying technology providing security for protocols such as HTTPS), we are now monitoring and archiving RC4 usage statistics as reported by the <a href="http://notary.icsi.berkeley.edu/">ICSI Certificate Notary</a>:
